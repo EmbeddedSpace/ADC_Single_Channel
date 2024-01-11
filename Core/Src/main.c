@@ -92,15 +92,27 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+    HAL_ADCEx_Calibration_Start(&hadc1);
+    int32_t ADC_Value;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+    HAL_ADC_Start(&hadc1);
   while (1)
   {
+      HAL_ADC_PollForConversion(&hadc1,50);
+
+      if(HAL_IS_BIT_SET(HAL_ADC_GetState(&hadc1),HAL_ADC_STATE_REG_EOC))
+      {
+          ADC_Value = HAL_ADC_GetValue(&hadc1);
+          printf("ADC1 Reading : %ld \r\n",ADC_Value);
+          printf("Voltage : %.4f \r\n", ADC_Value*3.3f/4096);
+      }
+      HAL_Delay(1000);
+
     /* USER CODE END WHILE */
-    printf("Hello\n");
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
