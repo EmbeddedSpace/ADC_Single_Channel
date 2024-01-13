@@ -109,6 +109,7 @@ int main(void)
           printf("ADC1 Reading : %ld \r\n",ADC_Value);
           printf("Voltage : %.4f \r\n", ADC_Value*3.3f/4096);
       }
+
       HAL_Delay(1000);
 
     /* USER CODE END WHILE */
